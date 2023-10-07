@@ -3,11 +3,21 @@ let config = {
     width: 1080,
     height: 720,
     fps:{target: 30,},
-    scene: [ Menu , Play ]
+    scene: [ Load , Menu , Play ],
+    physics: {default: 'arcade', arcade: {
 
-}
+        //DEBUG//
+
+        debug: true
+
+        //DEBUG//
+        }},
+        type: Phaser.WEBGL,
+        pixalArt: true,
+    };
+
 let game = new Phaser.Game(config);
-let keyF, keyR, keyLEFT, keyRIGHT, mouseLEFT;
+let keyW, keyA, keyS, keyD, keyE, keyQ;
 let scoreConfig = {
     fontFamily: 'MS Gothic',
     fontSize: '24px',
@@ -29,4 +39,9 @@ function MouseInTextBox(pointerX, pointerY, textBox){
     }else {
         return(false);
     }
+}
+function randomLoc(){
+    let x = Math.random()*game.config.width;
+    let y = Math.random()*game.config.height;
+    return(x,y);
 }
