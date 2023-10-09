@@ -11,7 +11,7 @@ class HazardStar extends Phaser.Physics.Arcade.Sprite {
         this.body.drag = 0;
         this.scale = 2;
         this.alpha = 1;
-        while(Phaser.Math.Distance.Between(scene.walker.x, scene.walker.y, this.x, this.y) < 100){
+        while(Phaser.Math.Distance.Between(scene.walker.x, scene.walker.y, this.x, this.y) < 200){
             console.log(Phaser.Math.Distance.Between(scene.walker.x, scene.walker.y, this.x, this.y));
             this.setRandomPosition(
             scene.spawnBorder + this.width/2,

@@ -30,7 +30,7 @@ class Play extends Phaser.Scene {
 
         //gameobject creation
         this.walker = new Walker(this, 0, 0, 'walker', 'starWalk1');
-        this.end = new EndStar(this, this.playSpaceX - 100, 100, 'endStar');
+        this.endStar = new EndStar(this, this.playSpaceX - 100, 100, 'endStar');
 
         this.hazards = this.add.group({
             classType: HazardStar,
@@ -42,6 +42,7 @@ class Play extends Phaser.Scene {
 
     update(){
         camControl(this.cameras.main);
+        this.walker.update(this.endStar, this.hazards);
     }
 }
 
