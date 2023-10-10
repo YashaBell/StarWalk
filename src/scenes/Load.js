@@ -20,6 +20,7 @@ class Load extends Phaser.Scene {
         this.load.image('endStar', 'endStar.png');
         this.load.image('hazard', 'hazardStar.png');
         this.load.image('bkg', 'void.png');
+        this.load.image('bkg2', 'voidOverlay.png');
         this.load.image('connect', 'connectStars.png');
 
         // ||| REFERENCES FROM PREIVIOUS WORK |||

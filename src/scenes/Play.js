@@ -22,7 +22,9 @@ class Play extends Phaser.Scene {
         this.physics.world.setBounds(0,0,this.playSpaceX, this.playSpaceY);
 
         //create bkg
-        this.add.tileSprite(0, 0, this.playSpaceX * 2, this.playSpaceY * 2,'bkg')
+        this.bkg1 = this.add.tileSprite(0, 0, this.playSpaceX * 2, this.playSpaceY * 2,'bkg')
+        this.bkg2 = this.add.tileSprite(0, 0, this.playSpaceX * 2, this.playSpaceY * 2,'bkg2')
+        this.bkg2.flipX=true;
 
         //cams
         this.cameras.main.setBounds(0,0,this.playSpaceX, this.playSpaceY);
@@ -31,6 +33,7 @@ class Play extends Phaser.Scene {
         //gameobject creation
         this.endStar = new EndStar(this, this.playSpaceX - 100, 100, 'endStar');
         this.walker = new Walker(this, 0, 0, 'walker', 'starWalk1');
+        this.retical;
 
         this.hpositions = new Array(5);
         this.hazards = this.add.group({
@@ -39,19 +42,35 @@ class Play extends Phaser.Scene {
             maxSize: 5
         })
         for(let i = 0; i < 5; i++){
-                this.hpositions[i] = new Array(2);
-                var temp = (new HazardStar(this, 0, 0, 'hazard'));
-                this.hpositions[i][0] = temp.x;
-                this.hpositions[i][1] = temp.y;
-
-                this.hazards.add( temp );
-            }
-        
+            this.hpositions[i] = new Array(2);
+            var temp = (new HazardStar(this, 0, 0, 'hazard'));
+            this.hpositions[i][0] = temp.x;
+            this.hpositions[i][1] = temp.y;
+            this.hazards.add( temp );
+        }
+            this.connect = this.add.group({
+                classType: ConnectStar,
+                runChildUpdate: true,
+                maxSize: 20
+            })
+            for(let i = 0; i < 20; i++){
+                    var temp = (new ConnectStar(this, 0, 0, 'connect'));
+                    this.connect.add( temp );
+                }
     }
 
     update(){
         camControl(this.cameras.main);
         this.walker.update(this.endStar, this.hpositions);
+        const pointer = this.input.activePointer.positionToCamera(this.cameras.main);
+        //console.log(pointer.x, pointer.y );
+        if(pointer.isDown){
+            this.connect.getChildren.foreach( function(star){
+                if(star.x + 8 > pointer.x > star.x - 8 && star.y + 8 > pointer.y > star.y - 8){
+
+                }
+            })
+        }
     }
 }
 
