@@ -2,7 +2,7 @@ let config = {
     type: Phaser.CANVAS,
     width: 1080,
     height: 720,
-    fps:{target: 30,},
+    fps:{target: 30},
     scene: [ Load , Menu , Play ],
     physics: {default: 'arcade', arcade: {
 

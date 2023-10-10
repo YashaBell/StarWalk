@@ -29,20 +29,29 @@ class Play extends Phaser.Scene {
         this.cameras.main.zoom = 0.5
 
         //gameobject creation
-        this.walker = new Walker(this, 0, 0, 'walker', 'starWalk1');
         this.endStar = new EndStar(this, this.playSpaceX - 100, 100, 'endStar');
+        this.walker = new Walker(this, 0, 0, 'walker', 'starWalk1');
 
+        this.hpositions = new Array(5);
         this.hazards = this.add.group({
             classType: HazardStar,
             runChildUpdate: true,
             maxSize: 5
         })
-        this.hazards.createMultiple({ key: "hazard", repeat: 5});
+        for(let i = 0; i < 5; i++){
+                this.hpositions[i] = new Array(2);
+                var temp = (new HazardStar(this, 0, 0, 'hazard'));
+                this.hpositions[i][0] = temp.x;
+                this.hpositions[i][1] = temp.y;
+
+                this.hazards.add( temp );
+            }
+        
     }
 
     update(){
         camControl(this.cameras.main);
-        this.walker.update(this.endStar, this.hazards);
+        this.walker.update(this.endStar, this.hpositions);
     }
 }
 

@@ -40,10 +40,10 @@ class Load extends Phaser.Scene {
                 prefix: 'starWalk',
                 suffix: '',
                 start: 1,
-                end: 6,
+                end: 2,
                 zeroPad: 0,
             }),
-            duration: 700,
+            duration: 800,
             repeat: -1
         });
 

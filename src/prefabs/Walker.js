@@ -8,6 +8,7 @@ class Walker extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.existing(this);
         this.scene = scene;
         this.body.onOverlap = true;
+        this.body.onCollide = true;
         this.body.isSquare = true;
         this.body.drag = 0;
         this.alpha = 1;
@@ -16,23 +17,22 @@ class Walker extends Phaser.Physics.Arcade.Sprite {
         this.x = 100 + this.width/2;
         this.y = scene.playSpaceY - 100 - this.height/2;
         this.setCollideWorldBounds(true);
-        this.goal = this.scene.endStar;
-        this.MaxY = 10
-        this.maxX = 10
+        this.body.setMaxSpeed(100);
     }
 
     update(goal, hazards) {
-        this.distX = goal.body.x - this.x;
-        this.distY = goal.body.y - this.y;
-        this.dist = Phaser.Math.Between(this.body.x,this.body.y,goal.body.x,goal.body.y)
-        this.accelTemp = 10000/Math.pow(this.dist, 2);
-        this.body.setVelocity(this.body.velocity.x + this.accelTemp * (this.distX/this.dist), this.body.velocity.y + this.accelTemp * (this.distY/this.dist));
-        for(let i = 0; i < hazards.countActive(); i++){
-            this.distX = hazards.body.x - this.x;
-            this.distY = hazards[i].body.y - this.y;
-            this.dist = Phaser.Math.Between(this.body.x,this.body.y,hazards[i].body.x,hazards[i].body.y);
-            this.accelTemp = 1000/Math.pow(this.dist, 2);
-            this.body.setVelocity(this.body.velocity.x + this.accelTemp * (this.distX/this.dist), this.body.velocity.y + this.accelTemp * (this.distY/this.dist));
+        this.distX = goal.x - this.x;
+        this.distY = goal.y - this.y;
+        this.dist = Phaser.Math.Between(this.x, this.y, goal.x, goal.y)
+        this.accelTemp = .01;
+        this.body.setVelocity(this.body.velocity.x + this.accelTemp * this.distX, this.body.velocity.y + this.accelTemp * this.distY);
+
+        for(let i = 0; i < hazards.length; i++){
+            this.distX = hazards[i][0] - this.x;
+            this.distY = hazards[i][1] - this.y;
+            this.dist = Phaser.Math.Between(this.body.x,this.body.y, hazards[i][0], hazards[i][1]);
+            this.accelTemp = 500/Math.pow(this.dist, 2);
+            this.body.setVelocity(this.body.velocity.x + this.accelTemp * this.distX, this.body.velocity.y + this.accelTemp * this.distY);
         }
     }
 }
