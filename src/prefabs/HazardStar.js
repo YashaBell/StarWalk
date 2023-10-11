@@ -4,21 +4,11 @@ class HazardStar extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.setOrigin(0.5,0.5);
-        this.x = 100
-        this.y = scene.playSpaceY - 100;
         this.body.onOverlap = true;
         this.body.isCircle = true;
         this.body.drag = 0;
         this.scale = 2;
         this.alpha = 1;
-        while(Phaser.Math.Distance.Between(scene.walker.x, scene.walker.y, this.x, this.y) < 200 || 
-        Phaser.Math.Distance.Between(scene.endStar.x, scene.endStar.y, this.x, this.y) < 200){
-            this.setRandomPosition(
-            scene.spawnBorder + this.width/2,
-            scene.spawnBorder + this.height/2,
-            this.scene.playSpaceX - 2*(scene.spawnBorder + this.width/2), 
-            this.scene.playSpaceY - 2*(scene.spawnBorder + this.height/2));
-        }
 
         const hazardShake = this.scene.tweens.chain({
              targets: this,
@@ -44,3 +34,11 @@ class HazardStar extends Phaser.Physics.Arcade.Sprite {
 
     }
 }
+// while(Phaser.Math.Distance.Between(scene.walker.x, scene.walker.y, this.x, this.y) < 200 || 
+//         Phaser.Math.Distance.Between(scene.endStar.x, scene.endStar.y, this.x, this.y) < 200){
+//             this.setRandomPosition(
+//             scene.spawnBorder + this.width/2,
+//             scene.spawnBorder + this.height/2,
+//             this.scene.playSpaceX - 2*(scene.spawnBorder + this.width/2), 
+//             this.scene.playSpaceY - 2*(scene.spawnBorder + this.height/2));
+//         }

@@ -7,7 +7,7 @@ class EndStar extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.existing(this);
         this.body.onCollide = true;
         this.scale = 2 
-        this.setPosition(this.scene.playSpaceX - (scene.spawnBorder + this.width/2), 100 + this.height/2);
+        this.setPosition(this.scene.playSpaceX - (this.width), this.scene.playSpaceY/2);
         this.scale = 1.5;
 
         const endVibe = this.scene.tweens.chain({

@@ -16,8 +16,8 @@ class Play extends Phaser.Scene {
 
         
         //set play space
-        this.playSpaceX = game.config.width * 2;
-        this.playSpaceY = game.config.height * 2;
+        this.playSpaceX = game.config.width * 4;
+        this.playSpaceY = game.config.height;
         this.spawnBorder = 100;
         this.physics.world.setBounds(0,0,this.playSpaceX, this.playSpaceY);
 
@@ -28,12 +28,15 @@ class Play extends Phaser.Scene {
 
         //cams
         this.cameras.main.setBounds(0,0,this.playSpaceX, this.playSpaceY);
-        this.cameras.main.zoom = 0.5
+        this.cameras.main.zoom = 1
 
         //gameobject creation
-        this.endStar = new EndStar(this, this.playSpaceX - 100, 100, 'endStar');
+        this.endStar = new EndStar(this, 0, 0, 'endStar');
         this.walker = new Walker(this, 0, 0, 'walker', 'starWalk1');
-        this.retical;
+        this.cameras.main.startFollow(this.walker);
+        this.reticle = this.add.sprite(-32, -32, 'reticle')
+        console.log(this.reticle);
+
 
         this.hpositions = new Array(5);
         this.hazards = this.add.group({
@@ -44,32 +47,45 @@ class Play extends Phaser.Scene {
         for(let i = 0; i < 5; i++){
             this.hpositions[i] = new Array(2);
             var temp = (new HazardStar(this, 0, 0, 'hazard'));
+            if(i == 0){
+                temp.setPosition(832, this.playSpaceY/2);
+            }else{
+                temp.setRandomPosition(
+                    i * 864 + temp.width/2,
+                    temp.height/2,
+                    864, 
+                    this.playSpaceY - temp.height);
+            }
             this.hpositions[i][0] = temp.x;
             this.hpositions[i][1] = temp.y;
             this.hazards.add( temp );
         }
-            this.connect = this.add.group({
-                classType: ConnectStar,
-                runChildUpdate: true,
-                maxSize: 20
-            })
-            for(let i = 0; i < 20; i++){
-                    var temp = (new ConnectStar(this, 0, 0, 'connect'));
-                    this.connect.add( temp );
-                }
+        this.connect = new Array(20);
+        for(let i = 0; i < 25; i++){
+            this.connect[i] = (new ConnectStar(this, 0, 0, 'connect'));
+            this.connect[i].setRandomPosition(
+            (i - (i % 5))/5 * 864 + this.connect[i].width/2,
+            this.connect[i].height/2,
+            864, 
+            this.playSpaceY - this.connect[i].height);
+        }
     }
 
     update(){
-        camControl(this.cameras.main);
+        //camControl(this.cameras.main);
         this.walker.update(this.endStar, this.hpositions);
         const pointer = this.input.activePointer.positionToCamera(this.cameras.main);
-        //console.log(pointer.x, pointer.y );
-        if(pointer.isDown){
-            this.connect.getChildren.foreach( function(star){
-                if(star.x + 8 > pointer.x > star.x - 8 && star.y + 8 > pointer.y > star.y - 8){
-
+        if(keyW.isDown){
+            if(this.reticle.x = - 32){
+                for(let i = 0; i < this.connect.length; i++){
+                    if(this.connect[i].x + 32 >  pointer.x && pointer.x > this.connect[i].x - 32 && this.connect[i].y + 32 > pointer.y && pointer.y > this.connect[i].y - 32){
+                        this.reticle.setPosition(this.connect[i].x, this.connect[i].y);
+                        i = this.connect.length;
+                    }
                 }
-            })
+            }else{
+                
+            }
         }
     }
 }
@@ -78,6 +94,7 @@ class Play extends Phaser.Scene {
 //https://github.com/photonstorm/phaser3-examples/blob/master/public/src/camera/rotate%20camera.js
 
 function camControl(cam){
+    var scrollSpeed = 10;
     if(keyQ.isDown){
         cam.zoom -= .01
     }else{
@@ -89,17 +106,17 @@ function camControl(cam){
         cam.zoom = 0.5;
     }
     if(keyS.isDown){
-        cam.scrollY += 5;
+        cam.scrollY += scrollSpeed;
     }else{
         if(keyW.isDown){
-            cam.scrollY -= 5;
+            cam.scrollY -= scrollSpeed;
         }
     }
     if(keyD.isDown){
-        cam.scrollX += 5;
+        cam.scrollX += scrollSpeed;
     }else{
         if(keyA.isDown){
-            cam.scrollX -= 5;
+            cam.scrollX -= scrollSpeed;
         }
     }
 }

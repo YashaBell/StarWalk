@@ -3,17 +3,8 @@ class ConnectStar extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame)
         scene.add.existing(this);
         this.setOrigin(0.5,0.5);
-        this.x = 100
-        this.y = scene.playSpaceY - 100;
         this.scale = 1;
         this.alpha = 1;
-        while(Phaser.Math.Distance.Between(scene.walker.x, scene.walker.y, this.x, this.y) < 200){
-            this.setRandomPosition(
-            scene.spawnBorder + this.width/2,
-            scene.spawnBorder + this.height/2,
-            this.scene.playSpaceX - 2*(scene.spawnBorder + this.width/2), 
-            this.scene.playSpaceY - 2*(scene.spawnBorder + this.height/2));
-        }
         
     }
 
@@ -22,3 +13,10 @@ class ConnectStar extends Phaser.GameObjects.Sprite {
 
     }
 }
+// while(Phaser.Math.Distance.Between(scene.walker.x, scene.walker.y, this.x, this.y) < 200){
+//             this.setRandomPosition(
+//             scene.spawnBorder + this.width/2,
+//             scene.spawnBorder + this.height/2,
+//             this.scene.playSpaceX - this.width/2, 
+//             this.scene.playSpaceY - this.height/2);
+//         }
