@@ -72,19 +72,52 @@ class Play extends Phaser.Scene {
     }
 
     update(){
+        
         //camControl(this.cameras.main);
         this.walker.update(this.endStar, this.hpositions);
         const pointer = this.input.activePointer.positionToCamera(this.cameras.main);
-        if(keyW.isDown){
-            if(this.reticle.x = - 32){
-                for(let i = 0; i < this.connect.length; i++){
-                    if(this.connect[i].x + 32 >  pointer.x && pointer.x > this.connect[i].x - 32 && this.connect[i].y + 32 > pointer.y && pointer.y > this.connect[i].y - 32){
-                        this.reticle.setPosition(this.connect[i].x, this.connect[i].y);
-                        i = this.connect.length;
+        if(Phaser.Input.Keyboard.JustDown(keyW)){
+            var temp;
+            for(let i = 0; i < this.connect.length; i++){
+                if(this.connect[i].x + 32 >  pointer.x && pointer.x > this.connect[i].x - 32 && this.connect[i].y + 32 > pointer.y && pointer.y > this.connect[i].y - 32){
+                    temp = this.connect[i];
+                    i = this.connect.length;
+                }else{
+                    if( i == this.connect.length - 1){
+                        temp = 1;
                     }
                 }
-            }else{
-                
+            }
+            if(temp != 1){
+                if(this.reticle.x == -32){
+                    this.reticle.setPosition(temp.x, temp.y);
+                }else{
+                    var Xdist = this.reticle.x-temp.x;
+                    var Ydist = this.reticle.y-temp.y;
+                    console.log(this.reticle.x, this.reticle.y,temp.x,temp.y);
+                    if((Xdist * Ydist) > 0){
+                        this.add.line(
+                            this.reticle.x - Xdist/2,
+                            this.reticle.y - Ydist/2,
+                            0,
+                            0,
+                            Math.abs(Xdist),
+                            Math.abs(Ydist),
+                            '0xff0000',5);
+                    }else{
+                        this.add.line(
+                            this.reticle.x - Xdist/2,
+                            this.reticle.y - Ydist/2,
+                            0,
+                            Math.abs(Ydist),
+                            Math.abs(Xdist),
+                            0,
+                            '0xff0000',5);
+                    }
+
+                    this.reticle.setPosition(-32,-32);
+                    console.log('line created');
+                }
             }
         }
     }
