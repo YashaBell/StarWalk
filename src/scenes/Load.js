@@ -23,6 +23,7 @@ class Load extends Phaser.Scene {
         this.load.image('bkg2', 'voidOverlay.png');
         this.load.image('connect', 'connectStars.png');
         this.load.image('reticle', 'reticle.png');
+        this.load.image('superLine', 'lineFuckOffPhaser.png');
 
         // ||| REFERENCES FROM PREIVIOUS WORK |||
         // this.load.image('bgd', 'bgd.png');
