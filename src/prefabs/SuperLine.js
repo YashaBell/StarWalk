@@ -13,7 +13,6 @@ class SuperLine extends Phaser.GameObjects.Line {
         this.xChange = this.Xtot/this.totalBodies;
         this.yChange = this.Ytot/this.totalBodies;
         this.xStart = x - this.Xtot/2;
-        console.log(y1);    
         if(y1 == 0){
             this.yStart = y - this.Ytot/2;
             this.slope = 1;
@@ -23,6 +22,7 @@ class SuperLine extends Phaser.GameObjects.Line {
         }
 
         this.supLine = new Array(this.totalBodies);
+
         for(let i = 0; i < this.totalBodies; i++){
             this.supLine[i] = scene.physics.add.sprite( 
                 this.xStart + this.xChange * i, 
@@ -30,15 +30,21 @@ class SuperLine extends Phaser.GameObjects.Line {
                 'superLine');
                 this.supLine[i].body.isCircle = true;
                 this.supLine[i].body.OnCollide = true;
-        }   
+                this.supLine[i].body.setImmovable(true);
+        }  
+        console.log(this.xChange, this.slope*this.yChange); 
     }
 
     update() {
-        // for(let i = 0; i < this.totalBodies; i++){
+        for(let i = 0; i < this.totalBodies; i++){
+            this.scene.physics.add.collider(this.scene.walker, this.supLine[i], () => {
+                this.scene.walker.setVelocity(this.xChange*100,this.slope*this.yChange*100);});
+
+
         //     this.scene.physics.add.collider(this.scene.walker, this.supLine[i]);
-        //     //, () => {
+        //          //, () => {
         //       //  this.scene.walker.setVelocity(this.xChange *100, this.slope*this.ychange*100);        
-        // }
+        }
     }
 }
 

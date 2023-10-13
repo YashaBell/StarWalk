@@ -4,6 +4,7 @@ class HazardStar extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.setOrigin(0.5,0.5);
+        this.body.setImmovable(true);
         this.body.onOverlap = true;
         this.body.isCircle = true;
         this.body.drag = 0;

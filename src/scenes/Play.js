@@ -31,13 +31,20 @@ class Play extends Phaser.Scene {
         this.cameras.main.zoom = 1
 
         //gameobject creation
+
+        // End Star
         this.endStar = new EndStar(this, 0, 0, 'endStar');
+        
+        // Walker
         this.walker = new Walker(this, 0, 0, 'walker', 'starWalk1');
+
+        // Follow Cam
         this.cameras.main.startFollow(this.walker);
-        this.reticle = this.add.sprite(-32, -32, 'reticle')
+
+        //Reticle for selection
+        this.reticle = this.add.sprite(-32, -32, 'reticle'); 
         console.log(this.reticle);
 
-        this.test = (new HazardStar(this, 832, this.playSpaceY/2, 'hazard'))
         this.hpositions = new Array(5);
         this.hazards = this.add.group({
             classType: HazardStar,
@@ -70,60 +77,89 @@ class Play extends Phaser.Scene {
             this.playSpaceY - this.connect[i].height);
         }
         this.linesTotal = 0;
-        this.lines = new Array(30);
+        this.lines = this.add.group({
+            classType: SuperLine,
+            runChildUpdate: true,
+            maxSize: 10
+        });
+        this.firstLine = false;
+        
+        this.gameOver = false;
     }
 
     update(){
-        
-        //camControl(this.cameras.main);
-        this.walker.update(this.endStar, this.hpositions);
-        
-        //interactions
-        this.physics.add.collider(this.walker, this.hazards);
-        
-        // line create
-        const pointer = this.input.activePointer.positionToCamera(this.cameras.main)
-        if(Phaser.Input.Keyboard.JustDown(keyW)){
-            var temp;
-            for(let i = 0; i < this.connect.length; i++){
-                if(this.connect[i].x + 32 >  pointer.x && pointer.x > this.connect[i].x - 32 && this.connect[i].y + 32 > pointer.y && pointer.y > this.connect[i].y - 32){
-                    temp = this.connect[i];
-                    i = this.connect.length;
-                }else{
-                    if( i == this.connect.length - 1){
-                        temp = 1;
+        if(!this.gameOver){
+            //camControl(this.cameras.main);
+            this.walker.update(this.endStar, this.hpositions);
+
+            if(this.firstLine){
+            }
+            //interactions
+            this.physics.add.collider(this.walker, this.hazards, () => {
+                this.gameOver = true;
+                this.walker.setVelocity(0,0);
+                this.walker.anims.stopOnFrame('walkLOOP');
+                this.tweens.chain({
+                    targets: this.walker,
+                   tweens: [
+                       {
+                           tint:'0xff0000',
+                           duration: 1500
+                       },
+                       {
+                            tint:'0x000000',
+                           duration: 1500
+                       }
+                   ],
+                   repeat: 5
+               });
+            });
+            
+            // line create
+            const pointer = this.input.activePointer.positionToCamera(this.cameras.main)
+            if(Phaser.Input.Keyboard.JustDown(keyW)){
+                var temp;
+                for(let i = 0; i < this.connect.length; i++){
+                    if(this.connect[i].x + 32 >  pointer.x && pointer.x > this.connect[i].x - 32 && this.connect[i].y + 32 > pointer.y && pointer.y > this.connect[i].y - 32){
+                        temp = this.connect[i];
+                        i = this.connect.length;
+                    }else{
+                        if( i == this.connect.length - 1){
+                            temp = 1;
+                        }
                     }
                 }
-            }
-            if(temp != 1){
-                if(this.reticle.x == -32){
-                    this.reticle.setPosition(temp.x, temp.y);
-                }else{
-                    var Xdist = this.reticle.x-temp.x;
-                    var Ydist = this.reticle.y-temp.y;
-                    var newLine;
-                    if((Xdist * Ydist) > 0){
-                        this.lines[this.linesTotal] = new SuperLine(this,
-                            this.reticle.x - Xdist/2,
-                            this.reticle.y - Ydist/2,
-                            0,
-                            0,
-                            Math.abs(Xdist),
-                            Math.abs(Ydist),
-                            '0xff0000',1);
-                            this.linesTotal ++;
+                if(temp != 1){
+                    if(this.reticle.x == -32){
+                        this.reticle.setPosition(temp.x, temp.y);
                     }else{
-                        this.lines[this.linesTotal] = new SuperLine(this,
-                            this.reticle.x - Xdist/2,
-                            this.reticle.y - Ydist/2,
-                            0,
-                            Math.abs(Ydist),
-                            Math.abs(Xdist),
-                            0,
-                            '0xff0000',1);
-                            this.linesTotal ++;
+                        var Xdist = this.reticle.x-temp.x;
+                        var Ydist = this.reticle.y-temp.y;
+                        var newLine;
+                        this.firstLine = true;
+                        if((Xdist * Ydist) > 0){
+                            this.lines.add( new SuperLine(this,
+                                this.reticle.x - Xdist/2,
+                                this.reticle.y - Ydist/2,
+                                0,
+                                0,
+                                Math.abs(Xdist),
+                                Math.abs(Ydist),
+                                '0xff0000',1));
+                                this.linesTotal ++;
+                        }else{
+                            this.lines.add( new SuperLine(this,
+                                this.reticle.x - Xdist/2,
+                                this.reticle.y - Ydist/2,
+                                0,
+                                Math.abs(Ydist),
+                                Math.abs(Xdist),
+                                0,
+                                '0xff0000',1));
+                                this.linesTotal ++;
+                        }
+                        this.reticle.setPosition(-32,-32);
                     }
-                    this.reticle.setPosition(-32,-32);
                 }
             }
         }
