@@ -3,7 +3,7 @@ let config = {
     width: 1080,
     height: 720,
     fps:{target: 30},
-    scene: [ Load , Menu , Play , GameUI, GameOver],
+    scene: [ Load , Menu , Play , GameUI, GameOver ],
     physics: {default: 'arcade', arcade: {
 
         //DEBUG//
