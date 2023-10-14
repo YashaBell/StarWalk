@@ -30,6 +30,7 @@ class SuperLine extends Phaser.GameObjects.Line {
                 'superLine');
                 this.supLine[i].body.isCircle = true;
                 this.supLine[i].body.OnCollide = true;
+                this.supLine[i].alpha = 0;
                 this.supLine[i].body.setImmovable(true);
         }  
         console.log(this.xChange, this.slope*this.yChange); 

@@ -16,7 +16,7 @@ class Walker extends Phaser.Physics.Arcade.Sprite {
         this.scale = 1;
         this.x = 100 + this.width/2;
         this.y = scene.playSpaceY/2; //- 100 - this.height/2;
-        this.setCollideWorldBounds(true,10,5);
+        this.setCollideWorldBounds(true,0.5,1);
         this.body.setVelocity(100,0);
         this.body.setMaxSpeed(100);
         this.body.setBounce(5,5);

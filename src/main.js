@@ -3,7 +3,7 @@ let config = {
     width: 1080,
     height: 720,
     fps:{target: 30},
-    scene: [ Load , Menu , Play ],
+    scene: [ Load , Menu , Play , GameUI, GameOver],
     physics: {default: 'arcade', arcade: {
 
         //DEBUG//
@@ -17,7 +17,7 @@ let config = {
     };
 
 let game = new Phaser.Game(config);
-let keyW, keyA, keyS, keyD, keyE, keyQ;
+let keyW, keyA, keyS, keyD, keyE, keyQ, keySpace;
 let scoreConfig = {
     fontFamily: 'MS Gothic',
     fontSize: '24px',
@@ -27,8 +27,21 @@ let scoreConfig = {
         top: 5,
         bottom: 5,
     },
-    fixedWidth: 100
 }    
+let titleConfig = {
+    fontFamily: 'hyper',
+    fontStyle: 'bold',
+    fontSize: '64px',
+    color: '#5409d4',
+    align: 'center',
+    padding: {
+        top: 10,
+        bottom: 10,
+    },
+    fixedWidth: 0
+}
+let score = 0;
+let highScore = 0;
 function MouseInTextBox(pointerX, pointerY, textBox){
     let x1 = textBox.x - textBox.width/2;
     let x2 = textBox.x + textBox.width/2;

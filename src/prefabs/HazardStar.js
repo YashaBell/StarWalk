@@ -11,7 +11,7 @@ class HazardStar extends Phaser.Physics.Arcade.Sprite {
         this.scale = 2;
         this.alpha = 1;
 
-        const hazardShake = this.scene.tweens.chain({
+        this.hazardShake = this.scene.tweens.chain({
              targets: this,
             tweens: [
                 {
@@ -27,12 +27,12 @@ class HazardStar extends Phaser.Physics.Arcade.Sprite {
             ],
             repeat: -1
         });
-        
     }
 
     update() {
-        
-
+        if(this.gameOver){
+            this.hazardShake.repeat = 1;
+        }
     }
 }
 // while(Phaser.Math.Distance.Between(scene.walker.x, scene.walker.y, this.x, this.y) < 200 || 

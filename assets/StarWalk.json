@@ -1,26 +1,34 @@
 { "frames": {
    "starWalk0": {
-    "frame": { "x": 0, "y": 0, "w": 60, "h": 116 },
+    "frame": { "x": 0, "y": 0, "w": 57, "h": 115 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 116 },
-    "sourceSize": { "w": 60, "h": 116 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 57, "h": 115 },
+    "sourceSize": { "w": 57, "h": 115 },
     "duration": 100
    },
    "starWalk1": {
-    "frame": { "x": 60, "y": 0, "w": 60, "h": 116 },
+    "frame": { "x": 57, "y": 0, "w": 57, "h": 115 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 116 },
-    "sourceSize": { "w": 60, "h": 116 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 57, "h": 115 },
+    "sourceSize": { "w": 57, "h": 115 },
     "duration": 100
    },
    "starWalk2": {
-    "frame": { "x": 120, "y": 0, "w": 60, "h": 116 },
+    "frame": { "x": 114, "y": 0, "w": 57, "h": 115 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 116 },
-    "sourceSize": { "w": 60, "h": 116 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 57, "h": 115 },
+    "sourceSize": { "w": 57, "h": 115 },
+    "duration": 100
+   },
+   "starWalk3": {
+    "frame": { "x": 171, "y": 0, "w": 57, "h": 115 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 57, "h": 115 },
+    "sourceSize": { "w": 57, "h": 115 },
     "duration": 100
    }
  },
@@ -29,7 +37,7 @@
   "version": "1.2.40-x64",
   "image": "StarWalk.png",
   "format": "RGBA8888",
-  "size": { "w": 180, "h": 116 },
+  "size": { "w": 228, "h": 115 },
   "scale": "1",
   "frameTags": [
   ],

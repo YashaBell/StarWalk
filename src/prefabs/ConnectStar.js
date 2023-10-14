@@ -5,7 +5,7 @@ class ConnectStar extends Phaser.GameObjects.Sprite {
         this.setOrigin(0.5,0.5);
         this.scale = 1;
         this.alpha = 1;
-        
+         
     }
 
     update() {
