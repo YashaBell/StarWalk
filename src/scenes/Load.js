@@ -16,7 +16,7 @@ class Load extends Phaser.Scene {
         // image files
         this.load.path = "./assets/";
         // the walking animation
-        this.load.aseprite('walker', 'starWalk.png', 'starWalk.json');
+        this.load.aseprite('walker', 'StarWalk.png', 'StarWalk.json');
         this.load.image('endStar', 'endStar.png');
         this.load.image('hazard', 'hazardStar.png');
         this.load.image('bkg', 'void.png');
