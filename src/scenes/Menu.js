@@ -22,7 +22,7 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 0
         }
-        
+        score = 0;
         this.cameras.main.zoom = 1;
         this.cameras.main.midPoint.x = game.config.width/2;
         this.cameras.main.midPoint.y = game.config.height/2;

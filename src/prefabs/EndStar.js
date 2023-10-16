@@ -43,5 +43,6 @@ class EndStar extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
+        
     }
 }
