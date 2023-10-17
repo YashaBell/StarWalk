@@ -115,46 +115,46 @@ class Play extends Phaser.Scene {
         });
 
             // Hazard star collide
-            this.physics.add.collider(this.walker, this.hazards, () => {
-                this.gameOver = true;
-                this.hazards.clear(true,true);
-                this.bkg1.destroy(true);
-                this.bkg2.destroy(true);
-                this.reticle.destroy(true);
-                this.endStar.destroy(true);
-                for (let i = 0; i < 25; i++) {
-                    this.connect[i].destroy(true);
-                }
-                this.lines.destroy(true);
-                this.walker.setVelocity(0, 0);
-                this.walker.anims.stop('walkLOOP');
-                this.walker.setFrame('starWalk0');
-                this.walkerIMAGE = this.add.image(this.walker.x, this.walker.y, 'walker', 'starWalk3').setAlpha(0);
-                this.tweens.add({
-                    targets: this.cameras.main,
-                    zoom : 3,
-                    duration: 2000
-                })
-                this.tweens.add({
-                    targets: this.walker,
-                            alpha: 0,
-                            duration: 2000,     
-                    repeat:0,
-                    onComplete: () => {
-                        this.tweens.add({
-                            targets: this.walkerIMAGE,
-                                    alpha: 1,
-                                    duration: 2000,     
-                            repeat:0,
-                            onComplete: () => {
+            this.physics.add.collider(this.walker, this.hazards, endGame());
+                // this.gameOver = true;
+                // this.hazards.clear(true,true);
+                // this.bkg1.destroy(true);
+                // this.bkg2.destroy(true);
+                // this.reticle.destroy(true);
+                // this.endStar.destroy(true);
+                // for (let i = 0; i < 25; i++) {
+                //     this.connect[i].destroy(true);
+                // }
+                // this.lines.destroy(true);
+                // this.walker.setVelocity(0, 0);
+                // this.walker.anims.stop('walkLOOP');
+                // this.walker.setFrame('starWalk0');
+                // this.walkerIMAGE = this.add.image(this.walker.x, this.walker.y, 'walker', 'starWalk3').setAlpha(0);
+                // this.tweens.add({
+                //     targets: this.cameras.main,
+                //     zoom : 3,
+                //     duration: 2000
+                // })
+                // this.tweens.add({
+                //     targets: this.walker,
+                //             alpha: 0,
+                //             duration: 2000,     
+                //     repeat:0,
+                //     onComplete: () => {
+                //         this.tweens.add({
+                //             targets: this.walkerIMAGE,
+                //                     alpha: 1,
+                //                     duration: 2000,     
+                //             repeat:0,
+                //             onComplete: () => {
         
-                                this.scene.stop('gameUIScene', { active: true })
-                                this.scene.start('gameOverScene');
-                            }
-                        });
-                    }
-                });
-            });
+                //                 this.scene.stop('gameUIScene', { active: true })
+                //                 this.scene.start('gameOverScene');
+                //             }
+                //         });
+                //     }
+                // });
+            //);
 
             // line create
             const pointer = this.input.activePointer.positionToCamera(this.cameras.main)
@@ -236,4 +236,45 @@ function camControl(cam) {
             cam.scrollX -= scrollSpeed;
         }
     }
+}
+
+function endGame(){
+    this.gameOver = true;
+    this.hazards.clear(true,true);
+    this.bkg1.destroy(true);
+    this.bkg2.destroy(true);
+    this.reticle.destroy(true);
+    this.endStar.destroy(true);
+    for (let i = 0; i < 25; i++) {
+        this.connect[i].destroy(true);
+    }
+    this.lines.destroy(true);
+    this.walker.setVelocity(0, 0);
+    this.walker.anims.stop('walkLOOP');
+    this.walker.setFrame('starWalk0');
+    this.walkerIMAGE = this.add.image(this.walker.x, this.walker.y, 'walker', 'starWalk3').setAlpha(0);
+    this.tweens.add({
+        targets: this.cameras.main,
+        zoom : 3,
+        duration: 2000
+    })
+    this.tweens.add({
+        targets: this.walker,
+                alpha: 0,
+                duration: 2000,     
+        repeat:0,
+        onComplete: () => {
+            this.tweens.add({
+                targets: this.walkerIMAGE,
+                        alpha: 1,
+                        duration: 2000,     
+                repeat:0,
+                onComplete: () => {
+
+                    this.scene.stop('gameUIScene', { active: true })
+                    this.scene.start('gameOverScene');
+                }
+            });
+        }
+    });
 }
