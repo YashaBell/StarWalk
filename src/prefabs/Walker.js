@@ -28,15 +28,6 @@ class Walker extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if(this.scene.sys.game.loop.time%5000 == 0){
-            this.stuckX = this.x;
-            this.stuckY = this.y;
-            if(this.stuckX < this.x + 5 && this.stuckX > this.x - 5){
-                if(this.stuckY < this.y + 5 && this.stuckY > this.y - 5){
-                    endGame();
-                }
-            }
-        }
         
         // if (Phaser.Input.Keyboard.JustDown(keyW)) {
         //     this.body.setVelocity(0, -this.VEL);
